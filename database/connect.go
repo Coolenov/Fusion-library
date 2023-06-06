@@ -6,14 +6,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var DB *sql.DB
+//var DB *sql.DB
 
-func DBConnect(dbUrl string) {
+func DBConnect(dbUrl string) *sql.DB {
 	var err error
 	//dsn := os.Getenv("DB_URL")
-	DB, err = sql.Open("mysql", dbUrl)
+	db, err := sql.Open("mysql", dbUrl)
 	if err != nil {
 		panic(err.Error())
 	}
+	return db
 	fmt.Println("Connected to database")
 }
