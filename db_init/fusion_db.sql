@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `Fusion_db`.`scrapers` (
 ENGINE = InnoDB;
 
 
-INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('Midjourney','127.0.0.1:8020/get/news','10','0');
-INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('HabrRu','127.0.0.1:8010/get/news','10','0');
+INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('Midjourney','http://127.0.0.1:8020/get/news','10','0');
+INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('HabrRu','http://127.0.0.1:8010/get/news','10','0');
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
