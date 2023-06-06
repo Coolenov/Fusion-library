@@ -1,4 +1,4 @@
-package lib
+package types
 
 type Post struct {
 	Title          string   `json:"title"`

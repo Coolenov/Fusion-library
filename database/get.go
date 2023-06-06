@@ -1,7 +1,6 @@
 package database
 
 import (
-	"FusionAPI/initialize"
 	"database/sql"
 	"fmt"
 )
@@ -13,34 +12,54 @@ func GetTagIdByTag(tag string, db *sql.DB) int64 {
 		fmt.Println(row)
 	}
 	return tagId
-
-	//func GetTagsIdFromDbByTags(tags []string, db *sql.DB) []int64 {
-	//	var tagId int64
-	//	var tagIds []int64
-	//	for _, i := range tags {
-	//		row := db.QueryRow("SELECT id FROM tags WHERE tagText=?", i).Scan(&tagId)
-	//		if row != nil {
-	//			continue
-	//		}
-	//		tagIds = append(tagIds, tagId)
-	//	}
-	//	return tagIds
-	//}
-	//
-	//func GetPostIdFromDb(tagIds []int64, db *sql.DB) []int64 {
-	//	var postId int64
-	//	var postIds []int64
-	//	for _, i := range tagIds {
-	//		row := db.QueryRow("SELECT post_id FROM postsTags WHERE tag_id=?", i).Scan(&postId)
-	//		if row != nil {
-	//			continue
-	//		}
-	//		postIds = append(postIds, postId)
-	//	}
-	//	return postIds
-	//}
-
 }
+
+func GetScrapersUrl(db *sql.DB) ([]string, error) {
+	var urls []string
+	rows, err := db.Query("SELECT link FROM scrapers WHERE CURRENT_TIMESTAMP > last_request + timeout;")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var url string
+		err := rows.Scan(&url)
+		if err != nil {
+			return nil, err
+		}
+		urls = append(urls, url)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return urls, err
+}
+
+//func GetTagsIdFromDbByTags(tags []string, db *sql.DB) []int64 {
+//	var tagId int64
+//	var tagIds []int64
+//	for _, i := range tags {
+//		row := db.QueryRow("SELECT id FROM tags WHERE tagText=?", i).Scan(&tagId)
+//		if row != nil {
+//			continue
+//		}
+//		tagIds = append(tagIds, tagId)
+//	}
+//	return tagIds
+//}
+//
+//func GetPostIdFromDb(tagIds []int64, db *sql.DB) []int64 {
+//	var postId int64
+//	var postIds []int64
+//	for _, i := range tagIds {
+//		row := db.QueryRow("SELECT post_id FROM postsTags WHERE tag_id=?", i).Scan(&postId)
+//		if row != nil {
+//			continue
+//		}
+//		postIds = append(postIds, postId)
+//	}
+//	return postIds
+//}
 
 //	func GetPostsByTags(PostTagsFromUser []string, db *sql.DB) []lib.Post {
 //		var result []lib.Post
@@ -134,23 +153,3 @@ func GetTagIdByTag(tag string, db *sql.DB) int64 {
 //		}
 //		return result
 //	}
-func GetScrapersUrl() ([]string, error) {
-	var urls []string
-	rows, err := initialize.DB.Query("SELECT link FROM scrapers WHERE CURRENT_TIMESTAMP > last_request + timeout;")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	for rows.Next() {
-		var url string
-		err := rows.Scan(&url)
-		if err != nil {
-			return nil, err
-		}
-		urls = append(urls, url)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return urls, err
-}

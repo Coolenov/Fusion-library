@@ -8,12 +8,12 @@ import (
 	"os"
 )
 
-var DBgorm *gorm.DB
+var DBGORM *gorm.DB
 
 func DbConnect() {
 	var err error
 	dsn := os.Getenv("DB_URL")
-	DBgorm, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	DBGORM, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}

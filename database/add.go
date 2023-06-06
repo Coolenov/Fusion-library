@@ -1,8 +1,8 @@
 package database
 
 import (
-	"FusionAPI/lib"
 	"database/sql"
+	"github.com/Coolenov/Fusion-library/types"
 )
 
 func AddTagIntoTagsTable(tag string, db *sql.DB) int64 {
@@ -15,7 +15,7 @@ func AddTagIntoTagsTable(tag string, db *sql.DB) int64 {
 
 }
 
-func AddPostIntoPostsTable(post lib.Post, db *sql.DB) int64 {
+func AddPostIntoPostsTable(post types.Post, db *sql.DB) int64 {
 	res, err := db.Exec("INSERT INTO posts(source,title,description,link,image_url,publishing_time) VALUES(?,?,?,?,?,?)",
 		post.Source,
 		post.Title,
