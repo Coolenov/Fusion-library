@@ -8,7 +8,7 @@ import (
 
 //var DB *sql.DB
 
-func DBConnect(dbUrl string) *sql.DB {
+func DbConnect(dbUrl string) *sql.DB {
 	var err error
 	//dsn := os.Getenv("DB_URL")
 	db, err := sql.Open("mysql", dbUrl)
@@ -17,5 +17,5 @@ func DBConnect(dbUrl string) *sql.DB {
 	}
 	fmt.Println("Connected to database")
 	return db
-	
+
 }
