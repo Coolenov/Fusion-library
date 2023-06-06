@@ -15,6 +15,7 @@ func DBConnect(dbUrl string) *sql.DB {
 	if err != nil {
 		panic(err.Error())
 	}
-	return db
 	fmt.Println("Connected to database")
+	return db
+	
 }
