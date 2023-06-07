@@ -5,15 +5,14 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
-	"os"
 )
 
 var DBGORM *gorm.DB
 
-func DbConnect() {
+func DbConnect(dbUrl string) {
 	var err error
-	dsn := os.Getenv("DB_URL")
-	DBGORM, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//dsn := os.Getenv("DB_URL")
+	DBGORM, err = gorm.Open(mysql.Open(dbUrl), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database")
 	}
