@@ -1,24 +1,25 @@
 package gormDb
 
 import (
-	"FusionAPI/lib"
+	"github.com/Coolenov/Fusion-library/types"
 )
 
-func GetContents() []lib.Content {
-	var contents []lib.Content
+func GetContents() []types.Content {
+	var contents []types.Content
 	DBgorm.Table("posts").Find(&contents)
+
 	return contents
 }
 
 func GetTagid(tag_text string) int64 {
-	var tag lib.Tag
+	var tag types.Tag
 	DBgorm.Table("tags").Where("text = ?", tag_text).First(&tag)
 	return tag.Id
 
 }
 
 func GetPostids(tagId int64) []int64 {
-	var postTags []lib.PostTags
+	var postTags []types.PostTags
 	DBgorm.Table("posts_tags").Where("tag_id = ?", tagId).Find(&postTags)
 
 	var postIds []int64
@@ -28,50 +29,50 @@ func GetPostids(tagId int64) []int64 {
 	return postIds
 }
 
-func GetContentsByIds(postIds []int64) []lib.Content {
-	var contents []lib.Content
+func GetContentsByIds(postIds []int64) []types.Content {
+	var contents []types.Content
 
 	for _, postId := range postIds {
-		var content lib.Content
+		var content types.Content
 		DBgorm.Table("posts").Where("id = ?", postId).First(&content)
 		contents = append(contents, content)
 	}
 	return contents
 }
 
-func GetContentById(post_id int64) lib.Content {
-	var content lib.Content
+func GetContentById(post_id int64) types.Content {
+	var content types.Content
 	DBgorm.Table("posts").Where("id = ?", post_id).First(&content)
 	return content
 }
 
-func GetAllTags() []lib.Tag {
-	var tags []lib.Tag
+func GetAllTags() []types.Tag {
+	var tags []types.Tag
 	DBgorm.Table("tags").Find(&tags)
 	return tags
 }
 
-func GetLastContentBySource(source string) lib.Content {
-	var content lib.Content
+func GetLastContentBySource(source string) types.Content {
+	var content types.Content
 	DBgorm.Table("posts").Where("source =?", source).Last(&content)
 	return content
 }
 
 func GetSourceByid(post_id int64) string {
-	var content lib.Content
+	var content types.Content
 	DBgorm.Table("posts").Where("id = ?", post_id).Find(&content)
 	return content.Source
 }
 
-func GetPreviousContentByid(post_id int64) lib.Content {
-	var content lib.Content
+func GetPreviousContentByid(post_id int64) types.Content {
+	var content types.Content
 	source := GetSourceByid(post_id)
 	DBgorm.Table("posts").Order("id desc").Where("source = ? AND id < ?", source, post_id).Find(&content)
 	return content
 }
 
-func GetNextContentByid(post_id int64) lib.Content {
-	var content lib.Content
+func GetNextContentByid(post_id int64) types.Content {
+	var content types.Content
 	source := GetSourceByid(post_id)
 	DBgorm.Table("posts").Where("source = ? AND id > ?", source, post_id).First(&content)
 	return content

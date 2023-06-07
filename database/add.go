@@ -2,10 +2,12 @@ package database
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/Coolenov/Fusion-library/types"
 )
 
 func AddTagIntoTagsTable(tag string, db *sql.DB) int64 {
+	fmt.Println(tag)
 	res, err := db.Exec("INSERT INTO tags(text) VALUES(?)", tag)
 	if err != nil {
 		panic(err.Error())

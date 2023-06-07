@@ -14,8 +14,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Fusion_db
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `Fusion_db` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `Fusion_db`;
+-- CREATE SCHEMA IF NOT EXISTS `Fusion_db`;
 USE `Fusion_db` ;
+
 
 -- -----------------------------------------------------
 -- Table `Fusion_db`.`posts`
@@ -54,7 +56,6 @@ CREATE TABLE IF NOT EXISTS `Fusion_db`.`posts_tags` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
-
 -- -----------------------------------------------------
 -- Table `Fusion_db`.`scrapers`
 -- -----------------------------------------------------
@@ -67,9 +68,10 @@ CREATE TABLE IF NOT EXISTS `Fusion_db`.`scrapers` (
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
+-- INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('Midjourney','http://127.0.0.1:8020/get/news','10','0');
 
-INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('Midjourney','http://127.0.0.1:8020/get/news','10','0');
-INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('HabrRu','http://127.0.0.1:8010/get/news','10','0');
+INSERT INTO scrapers(name,link,timeout,last_request) VALUES ('HabrRu','http://habr:8010/get/news','10','0');
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
