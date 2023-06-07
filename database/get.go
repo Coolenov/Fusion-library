@@ -18,7 +18,7 @@ func GetScrapersUrl(db *sql.DB) ([]string, error) {
 	var urls []string
 	rows, err := db.Query("SELECT link FROM scrapers WHERE CURRENT_TIMESTAMP > last_request + timeout;")
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Cant get link from table",err)
 		return nil, err
 
 	}
@@ -27,7 +27,7 @@ func GetScrapersUrl(db *sql.DB) ([]string, error) {
 		var url string
 		err := rows.Scan(&url)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Cant iterate rows",err)
 			return nil, err
 		}
 		urls = append(urls, url)
